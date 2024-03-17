@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Oxanium', cursive;
+}
+
+body {
+  text-align: center;
+  background: linear-gradient(to bottom, #6ab7f5, #fff);
+  min-height: 100vh;
+}
+
+main {
+  display: inline-block;
+  margin-top: 2%;
+  padding: 15px;
+  position: relative;
+}
+
+.pokedex {
+  width: 100%;
+  max-width: 425px;
+}
+
+.pokemon__image {
+  position: absolute;
+  bottom: 52.5%;
+  left: 50%;
+  transform: translate(-63%, 20%);
+  height: 18%;
+}
+
+.pokemon__data {
+  position: absolute;
+  font-weight: 600;
+  color: #aaa;
+  top: 55.5%;
+  right: 27%;
+  font-size: clamp(8px, 5vw, 25px);
+}
+
+.pokemon__name {
+  color: #3a444d;
+  text-transform: capitalize;
+
+  &.normal {
+    color: #a4acac;
+  }
+  
+  &.water {
+    color: #4494c4;
+  }
+  
+  &.fire {
+    color: #fc7c24;
+  }
+  
+  &.grass {
+    color: #9ccc54;
+  }
+  
+  &.flying {
+    background: linear-gradient(to bottom, #3cc4ec 50%,#bcbcbc 50%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  
+  &.fighting {
+    color: #d86424;
+  }
+  
+  &.poison {
+    color: #bc7ccc;
+  }
+  
+  &.electric {
+    color: #ebcf34;
+  }
+  
+  &.ground {
+    background: linear-gradient(to bottom, #d3be34 50%,#ac9c44 50%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  
+  &.rock {
+    color: #a48c24;
+  }
+  
+  &.psychic {
+    color: #f864bc;
+  }
+  
+  &.ice {
+    color: #54c4e4;
+  }
+  
+  &.bug {
+    color: #749c3c;
+  }
+  
+  &.ghost {
+    color: #8064a4;
+  }
+  
+  &.steel {
+    color: #9cb4bc;
+  }
+  
+  &.dragon {
+    background: linear-gradient(to bottom, #54a4cc 50%,#f46c54 50%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  
+  &.dark {
+    color: #3a444d;
+  }
+  
+  &.fairy {
+    color: #fab4e9;
+  }
+}
+
+.form {
+  position: absolute;
+  width: 65%;
+  top: 65%;
+  left: 13.5%;
+}
+
+.input__search {
+  width: 100%;
+  padding: 4%;
+  outline: none;
+  border: 2px solid #333;
+  border-radius: 5px;
+  font-weight: 600;
+  color: #3a444d;
+  font-size: clamp(8px, 5vw, 1rem);
+  box-shadow: -3px 4px 0 #888, -5px 7px 0 #333
+}
+
+.buttons {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  width: 65%;
+  transform: translate(-57%, 0);
+  display: flex;
+  gap: 20px;
+}
+
+.button {
+  width: 50%;
+  padding: 4%;
+  border: 2px solid #000;
+  border-radius: 5px;
+  font-size: clamp(8px, 5vw, 1rem);
+  font-weight: 600;
+  color: white;
+  background-color: #444;
+  box-shadow: -2px 3px 0 #222, -4px 6px 0 #000;
+}
+
+.button:active {
+  box-shadow: inset -4px 4px 0 #222;
+  font-size: 0.9rem;
+}
