@@ -1,125 +1,97 @@
-const pokemonName = document.querySelector('.pokemon__name');
-const pokemonNumber = document.querySelector('.pokemon__number');
-const pokemonImage = document.querySelector('.pokemon__image');
-
-const form = document.querySelector('.form');
-const input = document.querySelector('.input__search');
-const buttonPrev = document.querySelector('.btn-prev');
-const buttonNext = document.querySelector('.btn-next');
+const elements = {
+  pokemonName: document.querySelector('.pokemon__name'),
+  pokemonNumber: document.querySelector('.pokemon__number'),
+  pokemonImage: document.querySelector('.pokemon__image'),
+  form: document.querySelector('.form'),
+  input: document.querySelector('.input__search'),
+  buttonPrev: document.querySelector('.btn-prev'),
+  buttonNext: document.querySelector('.btn-next'),
+};
 
 let searchPokemon = 1;
+
+const typeClasses = {
+  normal: 'normal',
+  water: 'water',
+  fire: 'fire',
+  grass: 'grass',
+  flying: 'flying',
+  fighting: 'fighting',
+  poison: 'poison',
+  electric: 'electric',
+  ground: 'ground',
+  rock: 'rock',
+  psychic: 'psychic',
+  ice: 'ice',
+  bug: 'bug',
+  ghost: 'ghost',
+  steel: 'steel',
+  dragon: 'dragon',
+  dark: 'dark',
+  fairy: 'fairy',
+};
 
 const fetchPokemon = async (pokemon) => {
   const APIResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
 
-  if (APIResponse.status === 200) {
-    const data = await APIResponse.json();
-    return data;
+  if (APIResponse.ok) {
+    return await APIResponse.json();
+  } else {
+    throw new Error('Pokemon not found');
   }
-  else {
-    pokemonImage.style.display = 'none';
-    pokemonName.innerHTML = 'Not found :c';
-    pokemonNumber.innerHTML = 'Error';
-  }
-}
+};
 
 const renderPokemon = async (pokemon) => {
-
   removeAllTypes();
-  pokemonName.innerHTML = 'Loading...';
-  pokemonNumber.innerHTML = '';
+  elements.pokemonName.innerHTML = 'Loading...';
+  elements.pokemonNumber.innerHTML = '';
 
-  const data = await fetchPokemon(pokemon);
-  const firstType = (data['types']['0']['type']['name'])
+  try {
+    const data = await fetchPokemon(pokemon);
+    const firstType = data.types[0].type.name;
+    const imageUrl = data.sprites.versions['generation-v']['black-white'].front_default;
 
-    pokemonName.innerHTML = data.name;
-    pokemonNumber.innerHTML = data.id;
-    pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['front_default'];
-  
-    input.value = '';
+    elements.pokemonName.innerHTML = data.name;
+    elements.pokemonNumber.innerHTML = data.id;
+    elements.pokemonImage.src = imageUrl;
+    elements.pokemonImage.style.display = 'block';
+
+    elements.input.value = '';
     searchPokemon = data.id;
 
-    switch (firstType) {
-      case 'normal':
-        pokemonName.classList.add('normal');
-        break
-      case 'water':
-        pokemonName.classList.add('water');
-        break
-      case 'fire':
-        pokemonName.classList.add('fire');
-        break
-      case 'grass':
-        pokemonName.classList.add('grass');
-        break
-      case 'flying':
-        pokemonName.classList.add('flying');
-        break
-      case 'fighting':
-        pokemonName.classList.add('fighting');
-        break
-      case 'poison':
-        pokemonName.classList.add('poison');
-        break
-      case 'electric':
-        pokemonName.classList.add('electric');
-        break
-      case 'ground':
-        pokemonName.classList.add('ground');
-        break
-      case 'rock':
-        pokemonName.classList.add('rock');
-        break
-      case 'psychic':
-        pokemonName.classList.add('psychic');
-        break
-      case 'ice':
-        pokemonName.classList.add('ice');
-        break
-      case 'bug':
-        pokemonName.classList.add('bug');
-        break
-      case 'ghost':
-        pokemonName.classList.add('ghost');
-        break
-      case 'steel':
-        pokemonName.classList.add('steel');
-        break
-      case 'dragon':
-        pokemonName.classList.add('dragon');
-        break
-      case 'dark':
-        pokemonName.classList.add('dark');
-        break
-      case 'fairy':
-        pokemonName.classList.add('fairy');
-        break
-    }
+    addType(firstType);
+  } catch (error) {
+    elements.pokemonImage.style.display = 'none';
+    elements.pokemonName.innerHTML = 'Not found :c';
+    elements.pokemonNumber.innerHTML = 'Error';
+  }
+};
+
+function addType(type) {
+  const typeClass = typeClasses[type];
+  
+  elements.pokemonName.classList.add(typeClass);
 }
 
 function removeAllTypes() {
-
-  const removeAll = ['normal', 'water', 'fire', 'grass', 'flying', 'fighting', 'poison', 'electric', 'ground', 'rock', 'psychic', 'ice', 'bug',
-  'ghost', 'steel', 'dragon', 'dark', 'fairy'];
-
-  removeAll.forEach(type => {
-    pokemonName.classList.remove(type)
-  })
+  for (const typeClass of Object.values(typeClasses)) {
+    elements.pokemonName.classList.remove(typeClass);
+  }
 }
 
-form.addEventListener('submit', (event) => {
+elements.form.addEventListener('submit', (event) => {
   event.preventDefault();
-  renderPokemon(input.value.toLowerCase());
+  renderPokemon(elements.input.value.toLowerCase());
 });
 
-buttonPrev.addEventListener('click', () => {
+elements.buttonPrev.addEventListener('click', () => {
   if (searchPokemon > 1) {
     searchPokemon -= 1;
     renderPokemon(searchPokemon);
   }
 });
 
-buttonNext.addEventListener('click', () => {
+elements.buttonNext.addEventListener('click', () => {
   searchPokemon += 1;
   renderPokemon(searchPokemon);
 });
